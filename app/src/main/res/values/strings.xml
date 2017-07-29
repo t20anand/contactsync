@@ -3,4 +3,8 @@
     <string name="action_settings">Settings</string>
     <string name="newContactLabel">Add New Contact</string>
     <string name="action_save">Save</string>
+    <string name="error_field_required">This Field is required</string>
+    <string name="error_field_invalidEMail">Invalid Email</string>_f
+    <string name="error_field_invalidMobileNo">Invalid Mobile No</string>
+    <string name="error_field_invalidPhoneNo">Invalid Phone No</string>
 </resources>
