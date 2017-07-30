@@ -28,6 +28,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="200dp"
+                android:maxHeight="220dp"
                 android:scaleType="centerCrop"
                 android:visibility="gone"
                 app:srcCompat="@drawable/ic_person" />

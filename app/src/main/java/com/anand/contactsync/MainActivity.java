@@ -51,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
 
         context = this;
         this.dbAdapter = SQLiteDbHelper.getDbAdapter(this);
+        //Starting synchronizing service
+        startService(new Intent(this, SyncService.class));
 
         listViewContactList = (ListView) findViewById(R.id.listViewContactList);
 
@@ -94,12 +96,6 @@ public class MainActivity extends AppCompatActivity {
         };
         listViewContactList.setAdapter(contactItemAdapter);
 
-        NetworkHelper networkHelper = new NetworkHelper(getApplicationContext());
-        //checking for internet connection
-        if(networkHelper.isNetworkAvailable()) {
-            //Starting synchronizing service
-            startService(new Intent(this, SyncService.class));
-        }
     }
 
     @Override

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -26,32 +27,33 @@ public class SyncService extends Service {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    SQLiteDbHelper dbAdapter = SQLiteDbHelper.getDbAdapter(getApplicationContext());
+                    NetworkHelper networkHelper = new NetworkHelper(getApplicationContext());
+                    //checking for internet connection
+                    if (networkHelper.isNetworkAvailable()) {
+                        SQLiteDbHelper dbAdapter = SQLiteDbHelper.getDbAdapter(getApplicationContext());
 
-                    //getting rows which are not synced to firebase
-                    Cursor cursor = dbAdapter.getWritableDatabase().rawQuery("SELECT * FROM "+SQLiteDbHelper.TABLE_NAME+" WHERE "+SQLiteDbHelper.COL_SYNC_STATUS+"='N'", null);
-                    if(cursor.getCount() > 0){
-                        DatabaseReference firebaseDbRef = FirebaseDatabase.getInstance().getReference();
-                        ContentValues values = new ContentValues();
-                        while (cursor.moveToNext()){
-                            String id = cursor.getString(cursor.getColumnIndex(SQLiteDbHelper.COL_ID));
-                            String name = cursor.getString(cursor.getColumnIndex(SQLiteDbHelper.COL_NAME));
-                            String mobile = cursor.getString(cursor.getColumnIndex(SQLiteDbHelper.COL_MOBILE_NO));
-                            String phone = cursor.getString(cursor.getColumnIndex(SQLiteDbHelper.COL_PHONE_NO));
-                            String email = cursor.getString(cursor.getColumnIndex(SQLiteDbHelper.COL_EMAIL));
-                            String address = cursor.getString(cursor.getColumnIndex(SQLiteDbHelper.COL_ADDRESS));
+                        //getting rows which are not synced to firebase
+                        Cursor cursor = dbAdapter.getWritableDatabase().rawQuery("SELECT * FROM " + SQLiteDbHelper.TABLE_NAME + " WHERE " + SQLiteDbHelper.COL_SYNC_STATUS + "='N'", null);
+                        if (cursor.getCount() > 0) {
+                            DatabaseReference firebaseDbRef = FirebaseDatabase.getInstance().getReference();
+                            ContentValues values = new ContentValues();
+                            while (cursor.moveToNext()) {
+                                String id = cursor.getString(cursor.getColumnIndex(SQLiteDbHelper.COL_ID));
+                                String name = cursor.getString(cursor.getColumnIndex(SQLiteDbHelper.COL_NAME));
+                                String mobile = cursor.getString(cursor.getColumnIndex(SQLiteDbHelper.COL_MOBILE_NO));
+                                String phone = cursor.getString(cursor.getColumnIndex(SQLiteDbHelper.COL_PHONE_NO));
+                                String email = cursor.getString(cursor.getColumnIndex(SQLiteDbHelper.COL_EMAIL));
+                                String address = cursor.getString(cursor.getColumnIndex(SQLiteDbHelper.COL_ADDRESS));
 
-                            firebaseDbRef.child("contact").child(id).setValue(new Contact(id, name, mobile, phone, email, address));
-                            values.clear();
-                            values.put(SQLiteDbHelper.COL_SYNC_STATUS, "Y");
-                            dbAdapter.getWritableDatabase().update(SQLiteDbHelper.TABLE_NAME, values, "ID = ?", new String[]{id});
+                                firebaseDbRef.child("contact").child(id).setValue(new Contact(id, name, mobile, phone, email, address));
+                                values.clear();
+                                values.put(SQLiteDbHelper.COL_SYNC_STATUS, "Y");
+                                dbAdapter.getWritableDatabase().update(SQLiteDbHelper.TABLE_NAME, values, "ID = ?", new String[]{id});
+                            }
                         }
                     }
-                    //Stop service once it finishes its tasks
-                    stopSelf();
                 }
             }).start();
-
         return START_STICKY;
     }
 }

@@ -2,6 +2,7 @@ package com.anand.contactsync;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Log;
 
 import java.net.InetAddress;
@@ -22,8 +23,15 @@ public class NetworkHelper{
     }
 
     public boolean isNetworkAvailable(){
-        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        return connectivityManager.getActiveNetworkInfo() != null & connectivityManager.getActiveNetworkInfo().isConnected();
+        try {
+            ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
+            boolean isConnected = activeNetwork!=null && activeNetwork.isConnectedOrConnecting();
+            return isConnected;
+        }catch (Exception e){
+            Log.d(TAG,e.getMessage());
+        }
+        return false;
     }
 
 }

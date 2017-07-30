@@ -43,6 +43,7 @@ public class NewContact extends AppCompatActivity {
     private static final String TAG = "NewContact => ";
 
     private static final int CAMERA_PHOTO = 111;
+    private static final int GALLERY_PHOTO = 112;
 
     private SQLiteDbHelper dbAdapter;
     private EditText editTextName, editTextMobileNo, editTextPhoneNo, editTextEmail, editTextAddress;
@@ -93,6 +94,7 @@ public class NewContact extends AppCompatActivity {
                     PackageManager pm = context.getPackageManager();
                     if(pm.hasSystemFeature(PackageManager.FEATURE_CAMERA)){
                         Intent takePhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
                         if(null != takePhotoIntent.resolveActivity(getPackageManager()))
                         startActivityForResult(takePhotoIntent,CAMERA_PHOTO);
                     }
@@ -103,7 +105,7 @@ public class NewContact extends AppCompatActivity {
 
                 }else if(options[item].equals("Choose from Gallery")){
                     Intent intent = new Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    startActivityForResult(intent, 2);
+                    startActivityForResult(intent, GALLERY_PHOTO);
 
                 }else if(options[item].equals("Cancel")){
                     dialogInterface.dismiss();
@@ -119,6 +121,18 @@ public class NewContact extends AppCompatActivity {
             if(requestCode==CAMERA_PHOTO){
                 Bitmap photo = (Bitmap) data.getExtras().get("data");
                 imageViewContact.setImageBitmap(photo);
+                tempImageCont.setVisibility(View.GONE);
+                imageViewContact.setVisibility(View.VISIBLE);
+            }else if(requestCode == GALLERY_PHOTO){
+                Bitmap bm=null;
+                if (data != null) {
+                    try {
+                        bm = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), data.getData());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                imageViewContact.setImageBitmap(bm);
                 tempImageCont.setVisibility(View.GONE);
                 imageViewContact.setVisibility(View.VISIBLE);
             }
