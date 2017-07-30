@@ -29,7 +29,6 @@
         </activity>
         <activity android:name=".NewContact"
             android:label="@string/newContactLabel">
-            <meta-data android:name="android.support.PARENT_ACTIVITY" android:value=".MainActivity"></meta-data>
         </activity>
 
         <!-- Service -->
