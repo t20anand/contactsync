@@ -25,6 +25,7 @@ public class SQLiteDbHelper extends SQLiteOpenHelper {
     public static final String COL_PHONE_NO = "PHONE_NO";
     public static final String COL_EMAIL = "EMAIL";
     public static final String COL_ADDRESS = "ADDRESS";
+    public static final String COL_SYNC_STATUS = "IS_SYNC";
 
 
     private SQLiteDbHelper(Context context) {
@@ -46,7 +47,8 @@ public class SQLiteDbHelper extends SQLiteOpenHelper {
                 ", "+COL_MOBILE_NO+" VARCHAR NOT NULL"+
                 ", "+COL_PHONE_NO+" VARCHAR NOT NULL"+
                 ", "+COL_EMAIL+" VARCHAR NOT NULL"+
-                ", "+COL_ADDRESS+" VARCHAR NOT NULL )";
+                ", "+COL_ADDRESS+" VARCHAR NOT NULL"+
+                ", "+COL_SYNC_STATUS+" CHAR(1) NOT NULL DEFAULT 'N' )";
 
         try {
             sqLiteDatabase.execSQL(tableScript);

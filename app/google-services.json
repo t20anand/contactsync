@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "292883600794",
+    "firebase_url": "https://contactsync-333b1.firebaseio.com",
+    "project_id": "contactsync-333b1",
+    "storage_bucket": "contactsync-333b1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:292883600794:android:df828293fe8a06dd",
+        "android_client_info": {
+          "package_name": "com.anand.contactsync"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "292883600794-6ci2r4f5l3aigmj02a8p7hs9tnbjfib9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.anand.contactsync",
+            "certificate_hash": "6097197f5ee36b838e0e7a9149161bb4a3a88b21"
+          }
+        },
+        {
+          "client_id": "292883600794-ubg3uvr16i6733dv7olsml3jlnds22jn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBFF44tcGzmGWomV8Gx0-kMQXXOp9hW6Dw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "292883600794-ubg3uvr16i6733dv7olsml3jlnds22jn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
